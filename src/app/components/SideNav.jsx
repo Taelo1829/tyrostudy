@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import Link from "next/link"
 const SideNav = ({ toggleSideNav, isOpen }) => {
     //Create a side nav with 5 items using tailwind css that opens and closes smooth animation
     const showClass = isOpen ? "show" : "";
@@ -54,7 +54,7 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
                 <hr />
 
                 <div className={modulesZIndex + " " + (isModulesOpen ? "show" : "")} id="modules">
-                    <a href="#">
+                    <a href="/module">
                         <li className="m-4 pl-8">
                             COS2601 - Theoretical Computer Science II
                         </li>
