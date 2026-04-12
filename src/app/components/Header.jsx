@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import Logo from "../assets/logo.png"
+import Link from 'next/link'
 
 const Header = ({ toggleSideNav }) => {
     return (
@@ -9,7 +10,9 @@ const Header = ({ toggleSideNav }) => {
                 <i className="fa-solid fa-bars fa-3x cursor-pointer" onClick={toggleSideNav}></i>
             </div>
             <div >
-                <Image src={Logo} alt="logo" height={70} />
+                <Link href="/">
+                    <Image src={Logo} alt="logo" height={70} />
+                </Link>
             </div>
             <div></div>
         </div>

@@ -5,27 +5,13 @@ import SideNav from "./components/SideNav";
 import Calendar from "./components/Calendar";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [visibility, setVisibility] = useState("");
-  const toggleSideNav = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen) {
-      setVisibility("blur-sm zIndexBottom");
-    } else {
-      setTimeout(() => {
-        setVisibility("");
-      }, 300);
-    }
-  }
-
   let date = new Date().toDateString();
 
   const greetings = new Date().getHours() < 12 && new Date().getHours() < 18 ? "Good morning" : new Date().getHours() > 12 && new Date().getHours() < 18 ? "Good afternoon" : "Good evening";
   return (
     <div className="dashboard">
-      <Header toggleSideNav={toggleSideNav} />
-      <SideNav isOpen={isOpen} toggleSideNav={toggleSideNav} />
-      <div className={`main-content ${visibility}`}>
+    
+      <div className={`main-content`}>
         <div className="flex justify-between items-center mt-10">
           <h1 className="text-3xl mx-4 ">{greetings} Taelo</h1>
           <div>
