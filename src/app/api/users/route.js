@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 import { hashPassword } from "./hashPassword";
 import { sql } from '@vercel/postgres';
+import { createUnique } from '../helper';
 
 
 export async function POST(request) {
     try {
+        let loginCookie = createUnique()
         const { name, email, password } = await request.json();
         if (!name || !email) {
             return NextResponse.json({ error: 'Name and email required' }, { status: 400 });
@@ -12,8 +14,8 @@ export async function POST(request) {
 
         const hashedPassword = await hashPassword(password);
         const { rows } = await sql`
-        INSERT INTO users (FullName, Email,PasswordHash, PasswordSALT, CreatedAt)
-        VALUES (${name}, ${email}, ${hashedPassword}, 12,NOW())
+        INSERT INTO users (FullName, Email,PasswordHash, PasswordSALT,LoginCookie CreatedAt)
+        VALUES (${name}, ${email}, ${hashedPassword}, 12,${loginCookie},NOW())
         RETURNING *
         `;
 
