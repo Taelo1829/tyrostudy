@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import Link from "next/link"
+import ModuleNav from './ModuleNav';
 const SideNav = ({ toggleSideNav, isOpen }) => {
     //Create a side nav with 5 items using tailwind css that opens and closes smooth animation
     const showClass = isOpen ? "show" : "";
-    const [isModulesOpen, setModulesOpen] = useState(true);
+    const [isModulesOpen, setModulesOpen] = useState(false);
     const [modulesZIndex, setModulesZIndex] = useState("zIndexBottom");
     const direction = isModulesOpen ? "down" : "right";
 
@@ -54,18 +55,16 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
                 <hr />
 
                 <div className={modulesZIndex + " " + (isModulesOpen ? "show" : "")} id="modules">
-                    <a href="/module">
-                        <li className="m-4 pl-8">
-                            COS2601 - Theoretical Computer Science II
-                        </li>
-                    </a>
-                    <hr />
-                    <a href="#">
-                        <li className="m-4 pl-8">
-                            COS2611 - Programming: Data Structures
-                        </li>
-                    </a>
-                    <hr />
+                    <ModuleNav
+                        title="COS2601 - Theoretical Computer Science II"
+                        href="/module"
+                        toggle={toggleSideNav}
+                    />
+                    <ModuleNav
+                        title="COS2611 - Programming: Data Structures"
+                        href="/login"
+                        toggle={toggleSideNav}
+                    />
                     <a href="#">
                         <li className="m-4 pl-8">
                             COS2614 - Programming: Contemporary Concepts
@@ -91,8 +90,8 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
                     </a>
                     <hr />
                 </div>
-            </ul>
-        </div>
+            </ul >
+        </div >
     )
 }
 

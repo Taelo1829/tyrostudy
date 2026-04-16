@@ -23,6 +23,16 @@ const Calendar = () => {
                 <div className='border-r-1 border-gray-500 pr-7 pl-2'>Sat</div>
                 <div className='pr-7 pl-2'>Sun</div>
             </div>
+            <div className='flex bg-gray-200 text-black pr-2 border-t-1 border-black'>
+                <div className='border-r-1 border-gray-500 px-1 text-center '>09:00</div>
+                <div className='border-r-1 border-gray-500 pr-7 pl-2'>Mon</div>
+                <div className='border-r-1 border-gray-500 pr-7 pl-2'>Tue</div>
+                <div className='border-r-1 border-gray-500 pr-7 pl-2'>Wed</div>
+                <div className='border-r-1 border-gray-500 pr-7 pl-2'>Thur</div>
+                <div className='border-r-1 border-gray-500 pr-7 pl-2'>Fri</div>
+                <div className='border-r-1 border-gray-500 pr-7 pl-2'>Sat</div>
+                <div className='pr-7 pl-2'>Sun</div>
+            </div>
         </div>
     )
 }

@@ -3,11 +3,14 @@ const { sql } = require('@vercel/postgres');
 
 async function setup() {
     await sql`
-    CREATE TABLE IF NOT EXISTS users (
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      email VARCHAR(255) UNIQUE NOT NULL,
-      created_at TIMESTAMP DEFAULT NOW()
+    CREATE TABLE IF NOT EXISTS Users (
+      Id SERIAL PRIMARY KEY,
+      FullName VARCHAR(255) NOT NULL,
+      Email VARCHAR(255) UNIQUE NOT NULL,
+      PasswordHash VARCHAR(255) NOT NULL,
+      PasswordSALT VARCHAR(255) NOT NULL,
+      LoginCookie VARCHAR(255),
+      CreatedAt TIMESTAMP DEFAULT NOW()
     );
   `;
     console.log('Table created!');

@@ -11,23 +11,8 @@ export async function GET() {
     }
 }
 
-// POST /api/users
+
 export async function POST(request) {
-    try {
-        const { name, email } = await request.json();
-
-        if (!name || !email) {
-            return NextResponse.json({ error: 'Name and email required' }, { status: 400 });
-        }
-
-        const { rows } = await sql`
-      INSERT INTO users (name, email)
-      VALUES (${name}, ${email})
-      RETURNING *
-    `;
-
-        return NextResponse.json({ user: rows[0] }, { status: 201 });
-    } catch (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+  const body = await request.json()
+  console.log('Request body:', body) // see what's arriving
 }

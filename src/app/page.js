@@ -1,16 +1,16 @@
 "use client";
-import { useState } from "react";
-import Header from "./components/Header";
-import SideNav from "./components/SideNav";
 import Calendar from "./components/Calendar";
+import { redirect } from 'next/navigation'
 
 export default function Home() {
   let date = new Date().toDateString();
+  // app/page.tsx
 
+  redirect('/login')
   const greetings = new Date().getHours() < 12 && new Date().getHours() < 18 ? "Good morning" : new Date().getHours() > 12 && new Date().getHours() < 18 ? "Good afternoon" : "Good evening";
   return (
     <div className="dashboard">
-    
+
       <div className={`main-content`}>
         <div className="flex justify-between items-center mt-10">
           <h1 className="text-3xl mx-4 ">{greetings} Taelo</h1>

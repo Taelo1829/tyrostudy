@@ -3,10 +3,14 @@ import React, { useEffect, useState } from 'react'
 import Header from './components/Header'
 import SideNav from './components/SideNav';
 import AutoInstall from './components/AutoInstall';
+import { useRouter } from 'next/navigation';
+import { useCustomContext } from './Provider/Context';
 
 const ActualLayout = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [visibility, setVisibility] = useState("");
+    const { loggedIn, setLoggedIn } = useCustomContext()
+    const router = useRouter()
     const toggleSideNav = () => {
         setIsOpen(!isOpen);
         if (!isOpen) {
@@ -18,11 +22,18 @@ const ActualLayout = ({ children }) => {
         }
     }
 
+    useEffect(() => {
+        if (localStorage.getItem("auth-token")) {
+            setLoggedIn(true)
+        }
+    })
+
     return (
         <div >
             <AutoInstall />
-            <Header toggleSideNav={toggleSideNav} />
+            {loggedIn && <Header toggleSideNav={toggleSideNav} />}
             <SideNav isOpen={isOpen} toggleSideNav={toggleSideNav} />
+            {/* </>} */}
             <div className={visibility}>
                 {children}
             </div>

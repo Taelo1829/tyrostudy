@@ -6,7 +6,6 @@ export default function AutoInstall() {
     useEffect(() => {
         console.clear()
         const handler = (e) => {
-            console.log(e)
             e.preventDefault();
             setDeferredPrompt(e);
         };
