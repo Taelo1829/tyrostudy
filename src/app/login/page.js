@@ -2,14 +2,22 @@
 import Image from 'next/image'
 import { useState } from "react";
 import Logo from "../assets/logo.png"
+import { useCustomContext } from '../Provider/Context';
+import { redirect } from 'next/navigation'
+
 
 export default function AuthPage() {
     const [mode, setMode] = useState("login");
     const [form, setForm] = useState({ name: "", email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { loggedIn, setLoggedIn } = useCustomContext()
 
     const isLogin = mode === "login";
+
+    if (loggedIn) {
+        redirect('/')
+    }
 
     const handleChange = (e) => {
         setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -18,7 +26,8 @@ export default function AuthPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        let response = await fetch("/api/users", {
+        let apiPath = mode === "login" ? "/api/auth" : "/api/users";
+        let response = await fetch(apiPath, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -28,7 +37,8 @@ export default function AuthPage() {
 
         if (response.ok) {
             let body = await response.json();
-            console.log(body)
+            localStorage.setItem("auth-token", body.loginCookie);
+            setLoggedIn(true)
         }
 
         await new Promise((r) => setTimeout(r, 1200));
@@ -37,8 +47,7 @@ export default function AuthPage() {
 
     return (
         <div className='h-screen flex items-center justify-center bg-gray-100 root'>
-            <div style={styles.blob} aria-hidden="true" />
-
+            <div className='blob' aria-hidden="true" />
             <div style={styles.card}>
                 <div style={styles.brand}>
                     <div style={styles.logoMark}>
@@ -55,11 +64,10 @@ export default function AuthPage() {
                     <p style={styles.subtitle}>
                         {isLogin
                             ? "Sign in to continue to your workspace."
-                            : "Start your free 14-day trial. No credit card required."}
+                            : "Sign up to get started."}
                     </p>
                 </div>
 
-                {/* Tab toggle */}
                 <div style={styles.tabs}>
                     <button
                         onClick={() => setMode("login")}
@@ -250,17 +258,6 @@ function GitHubIcon() {
 }
 
 const styles = {
-    blob: {
-        position: "absolute",
-        top: "-120px",
-        right: "-80px",
-        width: "480px",
-        height: "480px",
-        borderRadius: "50%",
-        background:
-            "radial-gradient(circle, rgba(99,102,241,0.18) 0%, rgba(139,92,246,0.08) 60%, transparent 80%)",
-        pointerEvents: "none",
-    },
     card: {
         width: "100%",
         maxWidth: "420px",

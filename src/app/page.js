@@ -1,12 +1,16 @@
 "use client";
 import Calendar from "./components/Calendar";
 import { redirect } from 'next/navigation'
+import { useCustomContext } from "./Provider/Context";
 
 export default function Home() {
+  const { loggedIn } = useCustomContext()
   let date = new Date().toDateString();
   // app/page.tsx
+  if (!loggedIn) {
+    redirect('/login')
+  }
 
-  redirect('/login')
   const greetings = new Date().getHours() < 12 && new Date().getHours() < 18 ? "Good morning" : new Date().getHours() > 12 && new Date().getHours() < 18 ? "Good afternoon" : "Good evening";
   return (
     <div className="dashboard">

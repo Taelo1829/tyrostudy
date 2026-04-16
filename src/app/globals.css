@@ -246,3 +246,14 @@ body {
   position: relative;
   overflow: hidden;
 }
+
+.blob {
+  position: absolute;
+  top: -120;
+  right: -80;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(139, 92, 246, 0.08) 60%, transparent 80%);
+  pointer-events: none
+}

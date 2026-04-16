@@ -13,7 +13,7 @@ async function setup() {
       CreatedAt TIMESTAMP DEFAULT NOW()
     );
   `;
-    console.log('Table created!');
+
     process.exit(0);
 }
 
