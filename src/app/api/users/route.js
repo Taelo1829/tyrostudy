@@ -29,3 +29,14 @@ export async function POST(request) {
     }
 }
 
+export async function GET(request) {
+    try {
+        const { searchParams } = new URL(request.url)
+        const logincookie = searchParams.get('logincookie')
+        const { rows } = await sql`Select * FROM Users WHERE LoginCookie = ${logincookie};`
+        return NextResponse.json({ user: rows[0] }, { status: 200 })
+    } catch (error) {
+        console.log(error.message)
+        return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+}

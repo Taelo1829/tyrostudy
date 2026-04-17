@@ -17,4 +17,12 @@ async function setup() {
     process.exit(0);
 }
 
-setup().catch(console.error);
+// setup().catch(console.error);
+
+async function updateUser(){
+ await sql`
+    Update Users Set FullName = 'Taelo Seholoba'
+  `;
+}
+
+// updateUser()

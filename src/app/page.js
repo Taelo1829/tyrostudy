@@ -2,9 +2,15 @@
 import Calendar from "./components/Calendar";
 import { redirect } from 'next/navigation'
 import { useCustomContext } from "./Provider/Context";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    console.clear()
+    getUserData()
+  }, [])
   const { loggedIn } = useCustomContext()
+  const [user, setUser] = useState({})
   let date = new Date().toDateString();
   // app/page.tsx
   if (!loggedIn) {
@@ -17,7 +23,7 @@ export default function Home() {
 
       <div className={`main-content`}>
         <div className="flex justify-between items-center mt-10">
-          <h1 className="text-3xl mx-4 ">{greetings} Taelo</h1>
+          <h1 className="text-3xl mx-4 ">{greetings} {user.fullname}</h1>
           <div>
             <div className="date mx-4">
               {date}
@@ -82,4 +88,17 @@ export default function Home() {
       </div>
     </div>
   );
+
+  async function getUserData() {
+    try {
+      const loginCookie = localStorage.getItem('auth-token')
+      const response = await fetch('/api/users?logincookie=' + loginCookie, { method: 'GET' })
+      if (response.ok) {
+        const data = await response.json()
+        setUser(data.user)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
