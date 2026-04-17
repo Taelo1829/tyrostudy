@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
-import FlashCards from '../components/FlashCards'
+import FlashCards from '../../components/FlashCards'
 
-const page = () => {
+const page = ({ params }) => {
     return (
         <FlashCards />
     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from "next/link"
 import ModuleNav from './ModuleNav';
 const SideNav = ({ toggleSideNav, isOpen }) => {
@@ -6,8 +6,12 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
     const showClass = isOpen ? "show" : "";
     const [isModulesOpen, setModulesOpen] = useState(false);
     const [modulesZIndex, setModulesZIndex] = useState("zIndexBottom");
+    const [modules, setModules] = useState([])
     const direction = isModulesOpen ? "down" : "right";
 
+    useEffect(() => {
+        loadModules()
+    }, [])
     const toggleModules = () => {
         setModulesOpen(!isModulesOpen);
         if (isModulesOpen) {
@@ -55,44 +59,33 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
                 <hr />
 
                 <div className={modulesZIndex + " " + (isModulesOpen ? "show" : "")} id="modules">
-                    <ModuleNav
-                        title="COS2601 - Theoretical Computer Science II"
-                        href="/module"
-                        toggle={toggleSideNav}
-                    />
-                    <ModuleNav
-                        title="COS2611 - Programming: Data Structures"
-                        href="/login"
-                        toggle={toggleSideNav}
-                    />
-                    <a href="#">
-                        <li className="m-4 pl-8">
-                            COS2614 - Programming: Contemporary Concepts
-                        </li>
-                    </a>
-                    <hr />
-                    <a href="#">
-                        <li className="m-4 pl-8">
-                            INF1505 - Introduction to Business Information Systems
-                        </li>
-                    </a>
-                    <hr />
-                    <a href="#">
-                        <li className="m-4 pl-8">
-                            INF1520 - Human-Computer Interaction I
-                        </li>
-                    </a>
-                    <hr />
-                    <a href="#">
-                        <li className="m-4 pl-8">
-                            MAT1503 - Linear Algebra I
-                        </li>
-                    </a>
+                    {modules.map((module, index) => (
+                        <>
+                            <ModuleNav
+                                key={index}
+                                title={module.modulecode + " - " + module.modulename}
+                                href={"/module/" + module.id}
+                                toggle={toggleSideNav}
+                            />
+                        </>
+                    ))}
                     <hr />
                 </div>
             </ul >
         </div >
     )
+
+    async function loadModules() {
+        try {
+            const response = await fetch("/api/modules", { method: "GET" })
+            if (response.ok) {
+                const body = await response.json()
+                setModules(body)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }
 
 export default SideNav

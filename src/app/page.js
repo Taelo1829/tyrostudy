@@ -3,6 +3,7 @@ import Calendar from "./components/Calendar";
 import { redirect } from 'next/navigation'
 import { useCustomContext } from "./Provider/Context";
 import { useEffect, useState } from "react";
+import { CircleLoader } from "react-spinners";
 
 export default function Home() {
   useEffect(() => {
@@ -11,6 +12,7 @@ export default function Home() {
   }, [])
   const { loggedIn } = useCustomContext()
   const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(true)
   let date = new Date().toDateString();
   // app/page.tsx
   if (!loggedIn) {
@@ -18,9 +20,11 @@ export default function Home() {
   }
 
   const greetings = new Date().getHours() < 12 && new Date().getHours() < 18 ? "Good morning" : new Date().getHours() > 12 && new Date().getHours() < 18 ? "Good afternoon" : "Good evening";
+  if (loading) return (<div className="flex justify-center items-center h-screen">
+    <CircleLoader size={200} />
+  </div>)
   return (
     <div className="dashboard">
-
       <div className={`main-content`}>
         <div className="flex justify-between items-center mt-10">
           <h1 className="text-3xl mx-4 ">{greetings} {user.fullname}</h1>
@@ -96,6 +100,7 @@ export default function Home() {
       if (response.ok) {
         const data = await response.json()
         setUser(data.user)
+        setLoading(false)
       }
     } catch (error) {
       console.error(error)
