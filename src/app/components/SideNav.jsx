@@ -60,14 +60,12 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
 
                 <div className={modulesZIndex + " " + (isModulesOpen ? "show" : "")} id="modules">
                     {modules.map((module, index) => (
-                        <>
-                            <ModuleNav
-                                key={index}
-                                title={module.modulecode + " - " + module.modulename}
-                                href={"/module/" + module.id}
-                                toggle={toggleSideNav}
-                            />
-                        </>
+                        <ModuleNav
+                            key={index}
+                            title={module.modulecode + " - " + module.modulename}
+                            href={"/module/" + module.id}
+                            toggle={toggleSideNav}
+                        />
                     ))}
                     <hr />
                 </div>
