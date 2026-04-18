@@ -2,10 +2,12 @@
 import React from 'react'
 import FlashCards from '../../components/FlashCards'
 
-const page = ({ params }) => {
+const Page = async ({ params }) => {
+    const { id } = await params
+
     return (
-        <FlashCards />
+        <FlashCards id={id} />
     )
 }
 
-export default page
+export default Page

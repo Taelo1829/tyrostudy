@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
+import Loading from './Loading';
 
-const FlashCards = () => {
+const FlashCards = ({ id }) => {
     const allCards = [
         { tag: "Core concept", q: "What is the central question of computer theory?", a: "Whether a task can be done at all — not how to do it best." },
         { tag: "Core concept", q: "What is a 'machine' in computer theory?", a: "A mathematical model used to study what types of tasks can be performed and their limitations." },
@@ -23,10 +24,15 @@ const FlashCards = () => {
     const [tag, setTag] = React.useState("");
     const [current, setCurrent] = React.useState(1);
     const [flipped, setFlipped] = React.useState(false);
+    const [modules, setModules] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
     let cards = [...allCards];
 
+    console.log(modules)
+
     useEffect(() => {
-        viewNewCard()
+        console.clear()
+        loadModules()
     }, [])
 
     const viewNewCard = () => {
@@ -57,7 +63,7 @@ const FlashCards = () => {
             viewNewCard()
         }
     }
-
+    if (loading) return <Loading />
     return (
         <div className="fc-wrap">
             <div className="fc-meta">
@@ -110,6 +116,20 @@ const FlashCards = () => {
             </div>
         </div >
     )
+
+    async function loadModules() {
+        try {
+            const response = await fetch("/api/modules/" + id, { method: "GET" })
+            if (response.ok) {
+                const body = await response.json()
+                setModules(body)
+                viewNewCard()
+                setLoading(false)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }
 
 export default FlashCards

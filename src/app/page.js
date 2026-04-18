@@ -3,11 +3,10 @@ import Calendar from "./components/Calendar";
 import { redirect } from 'next/navigation'
 import { useCustomContext } from "./Provider/Context";
 import { useEffect, useState } from "react";
-import { CircleLoader } from "react-spinners";
+import Loading from "./components/Loading";
 
 export default function Home() {
   useEffect(() => {
-    console.clear()
     getUserData()
   }, [])
   const { loggedIn } = useCustomContext()
@@ -20,9 +19,7 @@ export default function Home() {
   }
 
   const greetings = new Date().getHours() < 12 && new Date().getHours() < 18 ? "Good morning" : new Date().getHours() > 12 && new Date().getHours() < 18 ? "Good afternoon" : "Good evening";
-  if (loading) return (<div className="flex justify-center items-center h-screen">
-    <CircleLoader size={200} />
-  </div>)
+  if (loading) return <Loading />
   return (
     <div className="dashboard">
       <div className={`main-content`}>
