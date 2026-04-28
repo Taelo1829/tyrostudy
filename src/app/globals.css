@@ -33,6 +33,14 @@ body {
   cursor: pointer;
 }
 
+.powerpoint {
+  background-color: #fff;
+  border: 1px solid var(--color-gray-800);
+  box-shadow: 2px 2px 5px #8d8d8d;
+  padding: 20px;
+  text-align: center;
+}
+
 .header {
   margin-top: -10px;
 }

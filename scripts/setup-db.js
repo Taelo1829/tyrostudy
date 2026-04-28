@@ -80,22 +80,37 @@ async function createTopicsTable() {
 
 }
 
-// createTopicsTable()
-
-async function SelectQuery() {
+async function createSubTopicsTable() {
   const results = await sql`
-    select * from modules
-  `;
-}
-
-
-async function insertTopic() {
-  const results = await sql`
-    insert into module_topics(ModuleId, Title) values (4, 'Chapter 1 - Information Systems
-in Business');
+    CREATE TABLE IF NOT EXISTS module_subtopics (
+      Id SERIAL PRIMARY KEY,
+      topicId INTEGER NOT NULL,
+      Title VARCHAR(255) NOT NULL
+  );
   `;
 
   console.log(results)
+
+}
+
+
+async function SelectQuery() {
+  const results = await sql`
+    select * from module_topics
+  `;
+
+  console.log(results.rows)
+}
+
+// SelectQuery()
+
+async function insertTopic() {
+  const results = await sql`
+    insert into module_subtopics(TopicId, Title) values (1, '1-1  Computers and Information
+Systems in Daily Life');
+  `;
+
+  console.log(results.rowCount)
 }
 
 insertTopic()
