@@ -19,6 +19,7 @@ const page = ({ params }) => {
                         <h2 className='powerpoint-h2'>SUBCHAPTER OVERVIEW</h2>
                         <br />
                         <p className='powerpoint-h1'>{subchapter.title}</p>
+                        <p className='powerpoint-h3'>{subchapter.description}</p>
                     </div>
                 </>
             ))}

@@ -85,7 +85,8 @@ async function createSubTopicsTable() {
     CREATE TABLE IF NOT EXISTS module_subtopics (
       Id SERIAL PRIMARY KEY,
       topicId INTEGER NOT NULL,
-      Title VARCHAR(255) NOT NULL
+      Title VARCHAR(255) NOT NULL,
+      Description TEXT
   );
   `;
 
@@ -93,6 +94,7 @@ async function createSubTopicsTable() {
 
 }
 
+// createSubTopicsTable()
 
 async function SelectQuery() {
   const results = await sql`
@@ -106,11 +108,22 @@ async function SelectQuery() {
 
 async function insertTopic() {
   const results = await sql`
-    insert into module_subtopics(TopicId, Title) values (1, '1-1  Computers and Information
-Systems in Daily Life');
+    insert into module_subtopics(TopicId, Title,Description) values (1, '1-1 Computers and Information
+Systems in Daily Life','Discuss common applications of computers and
+information systems.');
   `;
 
   console.log(results.rowCount)
 }
 
 insertTopic()
+
+// async function droptable() { 
+//   const results = await sql`
+//     drop table module_subtopics
+//   `;
+//   console.log(results)
+  
+// }
+
+// droptable()

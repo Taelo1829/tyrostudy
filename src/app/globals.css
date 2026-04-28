@@ -48,9 +48,13 @@ body {
   letter-spacing: 2px;
 }
 
+.powerpoint-h3 {
+  font-size: 11px;
+  color:#7eb3df;
+  padding-top:10px
+}
 .powerpoint-h1 {
   font-size: 12px;
-  font-weight: bold;
   color: #fff;
   letter-spacing: 2px;
 }
