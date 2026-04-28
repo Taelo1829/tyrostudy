@@ -147,3 +147,18 @@ async function insertTags() {
 }
 
 // insertTags()
+
+async function createSlides() {
+  const results = await sql`
+        CREATE TABLE IF NOT EXISTS module_slides (
+          Id SERIAL PRIMARY KEY,
+      subtopicId INTEGER NOT NULL,
+      Title VARCHAR(255) NOT NULL
+  );
+  `;
+
+  console.log(results)
+
+}
+
+createSlides()

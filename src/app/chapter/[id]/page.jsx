@@ -5,6 +5,7 @@ import React from 'react'
 const page = ({ params }) => {
     const [subchapters, setSubchapters] = React.useState([])
     const [loading, setLoading] = React.useState(true)
+    const [counter, setCounter] = React.useState(0)
 
     React.useEffect(() => {
         getData()
@@ -25,6 +26,10 @@ const page = ({ params }) => {
                                 {tag}
                             </div>
                         ))}
+                    </div>
+                    <div className='flex justify-between p-2'>
+                       {counter > 0 && <div className='tag p-2'>PREV</div>}
+                        <div className='tag p-2'>NEXT</div>
                     </div>
                 </>
             ))}
