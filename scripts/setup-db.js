@@ -116,14 +116,34 @@ information systems.');
   console.log(results.rowCount)
 }
 
-insertTopic()
 
-// async function droptable() { 
-//   const results = await sql`
-//     drop table module_subtopics
-//   `;
-//   console.log(results)
-  
-// }
+async function droptable() {
+  const results = await sql`
+    drop table module_subtopics
+  `;
+  console.log(results)
 
-// droptable()
+}
+
+async function createTags() {
+  const results = await sql`
+        CREATE TABLE IF NOT EXISTS module_tags (
+          Id SERIAL PRIMARY KEY,
+      subtopicId INTEGER NOT NULL,
+      Title VARCHAR(255) NOT NULL
+  );
+  `;
+
+  console.log(results)
+
+}
+
+async function insertTags() {
+  const results = await sql`
+    insert into module_tags(subtopicId, Title) values (1, 'Education'), (1, 'Retail & Banking'), (1, 'Mobile Tech'), (1, 'Social Media'), (1, 'COVID-19 Impact');
+  `;
+
+  console.log(results.rowCount)
+}
+
+// insertTags()

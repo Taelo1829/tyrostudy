@@ -50,9 +50,10 @@ body {
 
 .powerpoint-h3 {
   font-size: 11px;
-  color:#7eb3df;
-  padding-top:10px
+  color: #7eb3df;
+  padding-top: 10px
 }
+
 .powerpoint-h1 {
   font-size: 12px;
   color: #fff;
@@ -291,4 +292,14 @@ body {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(139, 92, 246, 0.08) 60%, transparent 80%);
   pointer-events: none
+}
+
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  margin: 3px;
+  border:solid 1px #00acc1;
+  background: #1565c0;
+  margin-bottom: 0.5rem;
 }

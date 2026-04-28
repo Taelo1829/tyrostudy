@@ -15,11 +15,16 @@ const page = ({ params }) => {
         <div className='main-content p-2'>
             {subchapters.map((subchapter, index) => (
                 <>
-                    <div className='powerpoint'>
+                    <div className='powerpoint' key={index}>
                         <h2 className='powerpoint-h2'>SUBCHAPTER OVERVIEW</h2>
                         <br />
                         <p className='powerpoint-h1'>{subchapter.title}</p>
                         <p className='powerpoint-h3'>{subchapter.description}</p>
+                        {subchapter.tags?.map((tag, idx) => (
+                            <div key={`tag-${idx}`} className={`tag`}>
+                                {tag}
+                            </div>
+                        ))}
                     </div>
                 </>
             ))}
