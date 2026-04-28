@@ -64,10 +64,38 @@ async function insertModuleQuestions() {
     (1, 'Method', 'What is the core interplay method used throughout the course?', 'Introduce a new machine → learn its language. Develop a new language → find a machine that corresponds to it.')
     `;
 
-
-
   console.log(results.rowCount)
 }
 
-insertModuleQuestions()
+async function createTopicsTable() {
+  const results = await sql`
+    CREATE TABLE IF NOT EXISTS module_topics (
+      Id SERIAL PRIMARY KEY,
+      ModuleId INTEGER NOT NULL,
+      Title VARCHAR(255) NOT NULL
+  );
+  `;
 
+  console.log(results)
+
+}
+
+// createTopicsTable()
+
+async function SelectQuery() {
+  const results = await sql`
+    select * from modules
+  `;
+}
+
+
+async function insertTopic() {
+  const results = await sql`
+    insert into module_topics(ModuleId, Title) values (4, 'Chapter 1 - Information Systems
+in Business');
+  `;
+
+  console.log(results)
+}
+
+insertTopic()

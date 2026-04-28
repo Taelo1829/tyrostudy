@@ -21,7 +21,16 @@ body {
   position: fixed;
   width: 100vw;
   background-color: #fff;
+}
 
+.menu-item {
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-gray-800);
+  box-shadow: 2px 2px 5px #8d8d8d;
+  text-align: center;
+  cursor: pointer;
 }
 
 .header {
