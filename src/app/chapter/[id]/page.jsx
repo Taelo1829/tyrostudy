@@ -12,13 +12,14 @@ const page = ({ params }) => {
 
     if (loading) return <Loading />
     return (
-        <div className='main-content p-5'>
+        <div className='main-content p-2'>
             {subchapters.map((subchapter, index) => (
                 <>
-                    <div key={index} className='p-5 '>
-                        <h2 className='text-md font-bold'><u>{subchapter.title}</u></h2>
+                    <div className='powerpoint'>
+                        <h2 className='powerpoint-h2'>SUBCHAPTER OVERVIEW</h2>
+                        <br />
+                        <p className='powerpoint-h1'>{subchapter.title}</p>
                     </div>
-                    <div className='powerpoint'></div>
                 </>
             ))}
         </div>
