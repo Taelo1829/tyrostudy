@@ -4,11 +4,13 @@ import Header from './components/Header'
 import SideNav from './components/SideNav';
 import AutoInstall from './components/AutoInstall';
 import { useCustomContext } from './Provider/Context';
+import { getAuthToken } from './helper';
 
 const ActualLayout = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [visibility, setVisibility] = useState("");
     const { loggedIn, setLoggedIn } = useCustomContext()
+    const [authToken] = useState(getAuthToken())
     const toggleSideNav = () => {
         setIsOpen(!isOpen);
         if (!isOpen) {
@@ -21,10 +23,10 @@ const ActualLayout = ({ children }) => {
     }
 
     useEffect(() => {
-        if (localStorage.getItem("auth-token")) {
+        if (authToken) {
             setLoggedIn(true)
         }
-    })
+    }, [])
 
     return (
         <div >

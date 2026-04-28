@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { useCustomContext } from "./Provider/Context";
 import { useEffect, useState } from "react";
 import Loading from "./components/Loading";
+import { getAuthToken } from "./helper";
 
 export default function Home() {
   useEffect(() => {
@@ -92,7 +93,7 @@ export default function Home() {
 
   async function getUserData() {
     try {
-      const loginCookie = localStorage.getItem('auth-token')
+      const loginCookie = getAuthToken()
       const response = await fetch('/api/users?logincookie=' + loginCookie, { method: 'GET' })
       if (response.ok) {
         const data = await response.json()

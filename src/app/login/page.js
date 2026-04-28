@@ -37,7 +37,8 @@ export default function AuthPage() {
 
         if (response.ok) {
             let body = await response.json();
-            localStorage.setItem("auth-token", body.loginCookie);
+            if (typeof window !== "undefined")
+                localStorage.setItem("auth-token", body.loginCookie);
             setLoggedIn(true)
         }
 
