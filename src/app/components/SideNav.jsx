@@ -44,6 +44,12 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
                 <hr />
                 <div className='bg-gray-800 p-4'>
                     <li className="flex justify-between items-center cursor-pointer">
+                        <Link href="/admin">Admin</Link>
+                    </li>
+                </div>
+                <hr />
+                <div className='bg-gray-800 p-4'>
+                    <li className="flex justify-between items-center cursor-pointer">
                         <div>Time Table</div>
                     </li>
                 </div>

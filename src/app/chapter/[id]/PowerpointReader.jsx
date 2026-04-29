@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-const PowerpointReader = ({fileUrl = ""}) => {
+const PowerpointReader = () => {
     return (
         <div>
             <iframe

@@ -167,7 +167,7 @@ export default function AuthPage() {
                     <button
                         onClick={handleSubmit}
                         disabled={loading}
-                        style={{ ...styles.submitBtn, ...(loading ? styles.submitBtnLoading : {}) }}
+                        className={"submitBtn" + (loading ? " submitBtnLoading" : "")}
                     >
                         {loading ? (
                             <span style={styles.spinner} />
@@ -386,28 +386,6 @@ const styles = {
         padding: "0",
         display: "flex",
         alignItems: "center",
-    },
-    submitBtn: {
-        width: "100%",
-        height: "44px",
-        background: "#6366f1",
-        color: "#ffffff",
-        border: "none",
-        borderRadius: "10px",
-        fontSize: "15px",
-        fontWeight: 600,
-        cursor: "pointer",
-        marginTop: "4px",
-        transition: "background 0.15s, opacity 0.15s",
-        fontFamily: "'DM Sans', sans-serif",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        letterSpacing: "-0.01em",
-    },
-    submitBtnLoading: {
-        opacity: 0.75,
-        cursor: "not-allowed",
     },
     spinner: {
         width: "18px",

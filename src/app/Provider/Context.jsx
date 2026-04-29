@@ -5,8 +5,8 @@ import { getAuthToken } from '../helper';
 const Context = React.createContext();
 const Provider = ({ children }) => {
     const [loggedIn, setLoggedIn] = React.useState(false);
-    const [token] = React.useState(getAuthToken())
     useEffect(() => {
+        const token = getAuthToken()
         if (token) {
             setLoggedIn(true)
         }

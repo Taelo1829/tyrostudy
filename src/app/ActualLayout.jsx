@@ -10,7 +10,6 @@ const ActualLayout = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [visibility, setVisibility] = useState("");
     const { loggedIn, setLoggedIn } = useCustomContext()
-    const [authToken] = useState(getAuthToken())
     const toggleSideNav = () => {
         setIsOpen(!isOpen);
         if (!isOpen) {
@@ -23,6 +22,7 @@ const ActualLayout = ({ children }) => {
     }
 
     useEffect(() => {
+        let authToken = getAuthToken()
         if (authToken) {
             setLoggedIn(true)
         }

@@ -12,12 +12,14 @@ const page = ({ params }) => {
         getData()
     }, [])
 
+    console.log(subchapters)
     if (loading) return <Loading />
     return (
         <div className='main-content p-2'>
             {subchapters.map((subchapter, index) => (
                 <React.Fragment key={index}>
-                    <PowerpointReader  />
+                    <h2 className='text-2xl font-bold mb-4'>{subchapter.title}</h2>
+                    <PowerpointReader />
                 </React.Fragment>
             ))}
         </div>
