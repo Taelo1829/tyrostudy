@@ -1,6 +1,7 @@
 "use client"
 import Loading from '@/app/components/Loading'
 import React from 'react'
+import PowerpointReader from './PowerpointReader'
 
 const page = ({ params }) => {
     const [subchapters, setSubchapters] = React.useState([])
@@ -15,23 +16,9 @@ const page = ({ params }) => {
     return (
         <div className='main-content p-2'>
             {subchapters.map((subchapter, index) => (
-                <>
-                    <div className='powerpoint' key={index}>
-                        <h2 className='powerpoint-h2'>SUBCHAPTER OVERVIEW</h2>
-                        <br />
-                        <p className='powerpoint-h1'>{subchapter.title}</p>
-                        <p className='powerpoint-h3'>{subchapter.description}</p>
-                        {subchapter.tags?.map((tag, idx) => (
-                            <div key={`tag-${idx}`} className={`tag`}>
-                                {tag}
-                            </div>
-                        ))}
-                    </div>
-                    <div className='flex justify-between p-2'>
-                       {counter > 0 && <div className='tag p-2'>PREV</div>}
-                        <div className='tag p-2'>NEXT</div>
-                    </div>
-                </>
+                <React.Fragment key={index}>
+                    <PowerpointReader  />
+                </React.Fragment>
             ))}
         </div>
     )
