@@ -24,6 +24,7 @@ export default function AuthPage() {
     };
 
     const handleSubmit = async (e) => {
+        console.log("here")
         e.preventDefault();
         setLoading(true);
         let apiPath = mode === "login" ? "/api/auth" : "/api/users";
@@ -69,7 +70,7 @@ export default function AuthPage() {
                     </p>
                 </div>
 
-                <div style={styles.tabs}>
+                <div className='tabs'>
                     <button
                         onClick={() => setMode("login")}
                         style={{ ...styles.tab, ...(isLogin ? styles.tabActive : {}) }}
@@ -308,13 +309,7 @@ const styles = {
         color: "#6b7280",
         lineHeight: 1.5,
     },
-    tabs: {
-        display: "flex",
-        background: "#f3f4f6",
-        borderRadius: "10px",
-        padding: "3px",
-        marginBottom: "24px",
-    },
+   
     tab: {
         flex: 1,
         padding: "8px 0",
