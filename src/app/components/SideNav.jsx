@@ -44,7 +44,7 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
                 <hr />
                 <div className='bg-gray-800 p-4'>
                     <li className="flex justify-between items-center cursor-pointer">
-                        <Link href="/admin">Admin</Link>
+                        <Link href="/admin" onClick={toggleSideNav}>Admin</Link>
                     </li>
                 </div>
                 <hr />
