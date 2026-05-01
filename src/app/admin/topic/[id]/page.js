@@ -26,8 +26,7 @@ const page = ({ params }) => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data)
-                    setImages([...images, data.url])
+                    setImages([...images, data])
                 })
                 .catch((error) => {
                     console.error("Error uploading image:", error)
@@ -83,9 +82,18 @@ const page = ({ params }) => {
                     <button className='add-image' onClick={insertImage}>Insert</button>
                 </div>
             </Modal>
-
+            <Modal isOpen={isQuestionsOpen} onClose={() => setIsQuestionsOpen(false)}>
+                <div>Add Questions</div>
+                <div>
+                    <input type="text" className='form-control' placeholder='Enter question' />
+                </div>
+                <div className='p-2 flex flex-end w-100'>
+                    <button className='add-image' >Insert</button>
+                </div>
+            </Modal>
         </div>
     )
+
 
     async function getId() {
         const { id } = await params
