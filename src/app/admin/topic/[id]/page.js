@@ -61,11 +61,11 @@ const page = ({ params }) => {
                     </button>
                     <div className='p-5 flex image-container gap-5'>
                         {images.map((img, index) => (
-                            <div className='position-relative'>
-                                <button className='delete' onClick={() => setImages(images.filter((image) => image !== img))}>
+                            <div className='position-relative' key={index}>
+                                <button className='delete' onClick={() => deleteImage(img.id)}>
                                     &times;
                                 </button>
-                                <img key={index} src={img.url} alt={`Image ${index}`} className='w-32 h-32' />
+                                <img src={img.url} alt={`Image ${index}`} className='w-32 h-32' />
                             </div>
                         ))}
                     </div>
@@ -118,6 +118,18 @@ const page = ({ params }) => {
             setIsOpen(false)
         } catch (error) {
             console.error("Error inserting image:", error)
+        }
+    }
+
+    async function deleteImage(imageId) {
+        try {
+            setImages(images.filter((img) => img.id !== imageId))
+            const response = await fetch(`/api/images/${imageId}`, {
+                method: "DELETE",
+            })
+            const data = await response.json()
+        } catch (error) {
+            console.error("Error deleting image:", error)
         }
     }
 }

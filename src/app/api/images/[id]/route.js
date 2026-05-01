@@ -1,12 +1,11 @@
-import { sql } from "@vercel/postgres"
 import { NextResponse } from "next/server"
 
-export async function POST(request) {
+export async function DELETE(request, { params }) {
     try {
-        const { subtopicId, url } = await request.json()
+        const { id } = await params
         let results = await sql`
-        Insert into module_images (SubtopicId, Url) 
-        values (${subtopicId}, ${url});`
+        Delete from module_images 
+        where id = ${id};`
 
         return NextResponse.json(results, { status: 200 })
     } catch (error) {
@@ -14,4 +13,3 @@ export async function POST(request) {
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }
-
