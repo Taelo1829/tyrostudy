@@ -1,5 +1,6 @@
 "use client"
 import Card from '@/app/components/Card'
+import Loading from '@/app/components/Loading'
 import React, { useEffect } from 'react'
 
 const page = ({ params }) => {
@@ -16,11 +17,12 @@ const page = ({ params }) => {
 
     }
 
+    if (loading) return <Loading />
     return (
         <div className='main-content p-5'>
             <div>
                 {topics.map((topic) => (
-                    <Card key={topic.id} title={topic.title} href={'admin/topic/' + topic.id} />
+                    <Card key={topic.id} title={topic.title} href={'/admin/topic/' + topic.id} />
                 ))}
                 <button
                     onClick={addTopic}
