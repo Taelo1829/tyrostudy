@@ -161,4 +161,19 @@ async function createSlides() {
 
 }
 
-createSlides()
+// createSlides()
+
+async function createImagesTable() {
+  const results = await sql`
+        CREATE TABLE IF NOT EXISTS module_images (
+        Id SERIAL PRIMARY KEY,
+        SubtopicId INTEGER NOT NULL,
+        Url VARCHAR(255) NOT NULL
+  );
+  `;
+
+  console.log(results)
+
+}
+
+createImagesTable()

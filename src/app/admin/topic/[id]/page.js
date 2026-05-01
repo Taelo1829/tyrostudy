@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 const page = ({ params }) => {
     const [loading, setLoading] = useState(true)
-    const [_, setId] = useState()
+    const [id, setId] = useState()
     const [topic, setTopic] = useState({})
     const [isOpen, setIsOpen] = useState(false)
     const [images, setImages] = useState([])
@@ -26,6 +26,7 @@ const page = ({ params }) => {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(data)
                     setImages([...images, data.url])
                 })
                 .catch((error) => {
@@ -58,11 +59,19 @@ const page = ({ params }) => {
                     <button className='add-image' onClick={() => setIsOpen(true)}>
                         Add Images
                     </button>
+                    <div className='p-5 flex'>
+                        {images.map((url, index) => (
+                            <img key={index} src={url} alt={`Image ${index}`} className='w-32 h-32' />
+                        ))}
+                    </div>
                 </div>
             </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <div>Add Images</div>
                 <input type="file" className='form-control' onChange={uploadImage} />
+                <div className='p-2 flex flex-end w-100'>
+                    <button className='add-image' onClick={insertImage}>Insert</button>
+                </div>
             </Modal>
         </div>
     )
@@ -77,6 +86,7 @@ const page = ({ params }) => {
         try {
             const response = await fetch(`/api/topic/${id}`)
             const data = await response.json()
+            console.log(data)
             setTopic(data)
             setLoading(false)
         } catch (error) {
@@ -86,7 +96,15 @@ const page = ({ params }) => {
 
     async function insertImage() {
         try {
-
+            const response = await fetch("/api/images", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ subtopicId: id, url: images[images.length - 1] }),
+            })
+            const data = await response.json()
+            setIsOpen(false)
         } catch (error) {
             console.error("Error inserting image:", error)
         }
