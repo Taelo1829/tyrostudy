@@ -18,7 +18,7 @@ const page = ({ params }) => {
         <div className='main-content p-2'>
             {subchapters.map((subchapter, index) => (
                 <React.Fragment key={index}>
-                    <h2 className='text-2xl font-bold mb-4'>{subchapter.title}</h2>
+                    <h2 className='text-md font-bold mb-4'>{subchapter.title}</h2>
                     <PowerpointReader />
                 </React.Fragment>
             ))}

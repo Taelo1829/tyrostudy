@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1040.0",
     "@vercel/postgres": "^0.10.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.1",
@@ -16,6 +17,7 @@
     "next-pwa": "^5.6.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-hot-toast": "^2.6.0",
     "react-spinners": "^0.17.0"
   },
   "devDependencies": {

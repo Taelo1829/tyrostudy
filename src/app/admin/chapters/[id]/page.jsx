@@ -44,12 +44,16 @@ const page = ({ params }) => {
     async function getChapters(id) {
         try {
             const response = await fetch(`/api/chapters/by-module?moduleId=${id}`)
-            const data = await response.json()
-            console.log(data)
-            setChapters(data)
-            setLoading(false)
+            if (response.ok) {
+                const data = await response.json()
+                console.log(data)
+                setChapters(data)
+
+            }
         } catch (error) {
             console.error("Error fetching chapters:", error)
+        } finally {
+            setLoading(false)
         }
     }
 }

@@ -351,3 +351,25 @@ a {
   font-size: 10px;
   font-weight: 600;
 }
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-gray-800) !important;
+  border-radius: 10px;
+  margin-top: 4px;
+}
+
+.description {
+  height: 100px;
+}
+
+.add-image {
+  border: 1px solid var(--color-gray-800);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #00acc1;
+  color: #fff;
+}
