@@ -373,3 +373,16 @@ a {
   background-color: #00acc1;
   color: #fff;
 }
+
+.image-container {
+  max-width: 100vw;
+  overflow-y: auto;
+}
+
+.delete {
+  text-align: center;
+  cursor: pointer;
+  color: #ff0000;
+  position: absolute;
+  font-size: 20px;
+}

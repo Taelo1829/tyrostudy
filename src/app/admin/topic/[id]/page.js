@@ -8,8 +8,8 @@ const page = ({ params }) => {
     const [id, setId] = useState()
     const [topic, setTopic] = useState({})
     const [isOpen, setIsOpen] = useState(false)
+    const [isQuestionsOpen, setIsQuestionsOpen] = useState(false)
     const [images, setImages] = useState([])
-    const [image, setImage] = useState(null)
     useEffect(() => {
         getId().then(id => {
             getTopics(id)
@@ -59,10 +59,20 @@ const page = ({ params }) => {
                     <button className='add-image' onClick={() => setIsOpen(true)}>
                         Add Images
                     </button>
-                    <div className='p-5 flex'>
-                        {images.map((url, index) => (
-                            <img key={index} src={url} alt={`Image ${index}`} className='w-32 h-32' />
+                    <div className='p-5 flex image-container gap-5'>
+                        {images.map((img, index) => (
+                            <div className='position-relative'>
+                                <button className='delete' onClick={() => setImages(images.filter((image) => image !== img))}>
+                                    &times;
+                                </button>
+                                <img key={index} src={img.url} alt={`Image ${index}`} className='w-32 h-32' />
+                            </div>
                         ))}
+                    </div>
+                    <div className='pt-2'>
+                        <button className='add-image' onClick={() => setIsQuestionsOpen(true)}>
+                            Add Questions
+                        </button>
                     </div>
                 </div>
             </div>
@@ -73,6 +83,7 @@ const page = ({ params }) => {
                     <button className='add-image' onClick={insertImage}>Insert</button>
                 </div>
             </Modal>
+
         </div>
     )
 
@@ -86,8 +97,8 @@ const page = ({ params }) => {
         try {
             const response = await fetch(`/api/topic/${id}`)
             const data = await response.json()
-            console.log(data)
             setTopic(data)
+            setImages(data.images)
             setLoading(false)
         } catch (error) {
             console.error("Error fetching chapters:", error)
