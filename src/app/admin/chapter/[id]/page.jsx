@@ -43,7 +43,6 @@ const page = ({ params }) => {
 
     async function getTopics(id) {
         try {
-            console.log(id)
             const response = await fetch(`/api/chapters/${id}`)
             const data = await response.json()
             console.log(data)

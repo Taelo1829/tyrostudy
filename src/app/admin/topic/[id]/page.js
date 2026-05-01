@@ -8,13 +8,34 @@ const page = ({ params }) => {
     const [_, setId] = useState()
     const [topic, setTopic] = useState({})
     const [isOpen, setIsOpen] = useState(false)
+    const [images, setImages] = useState([])
+    const [image, setImage] = useState(null)
     useEffect(() => {
         getId().then(id => {
             getTopics(id)
         })
     }, [])
 
-    console.log( process.env.R2_ACCOUNT_ID)
+    function uploadImage(file) {
+        try {
+            const formData = new FormData();
+            formData.append("file", file.target.files[0]);
+            fetch("/api/upload", {
+                method: "POST",
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setImages([...images, data.url])
+                })
+                .catch((error) => {
+                    console.error("Error uploading image:", error)
+                });
+        } catch (error) {
+            console.error("Error uploading image:", error)
+        }
+    }
+
     if (loading) return <Loading />
     return (
         <div className='main-content p-3'>
@@ -41,7 +62,7 @@ const page = ({ params }) => {
             </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <div>Add Images</div>
-                <input type="file" className='form-control' />
+                <input type="file" className='form-control' onChange={uploadImage} />
             </Modal>
         </div>
     )
