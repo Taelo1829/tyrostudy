@@ -31,6 +31,18 @@ async function CreatingModulesTable() {
 
   console.log(results)
 }
+async function createImagesTable() {
+  const results = await sql`
+        CREATE TABLE IF NOT EXISTS module_images (
+        Id SERIAL PRIMARY KEY,
+        SubtopicId INTEGER NOT NULL,
+        Url VARCHAR(255) NOT NULL
+  );
+  `;
+
+  console.log(results)
+
+}
 
 async function createModuleQuestions() {
   const results = await sql`
@@ -45,8 +57,6 @@ async function createModuleQuestions() {
   console.log(results)
 }
 
-createModuleQuestions()
-
 async function createModuleAnswers() {
   const results = await sql`
     CREATE TABLE IF NOT EXISTS module_answers (
@@ -57,7 +67,19 @@ async function createModuleAnswers() {
   `;
 }
 
-createModuleAnswers()
+async function createSlides() {
+  const results = await sql`
+        CREATE TABLE IF NOT EXISTS module_slides (
+          Id SERIAL PRIMARY KEY,
+      subtopicId INTEGER NOT NULL,
+      Title VARCHAR(255) NOT NULL
+  );
+  `;
+
+  console.log(results)
+
+}
+
 async function insertModuleQuestions() {
   const results = await sql`
     insert into module_questions(ModuleId, Tag, Question, Answer)
@@ -105,18 +127,6 @@ async function createSubTopicsTable() {
 
 }
 
-// createSubTopicsTable()
-
-async function SelectQuery() {
-  const results = await sql`
-    select * from module_topics
-  `;
-
-  console.log(results.rows)
-}
-
-// SelectQuery()
-
 async function insertTopic() {
   const results = await sql`
     insert into module_subtopics(TopicId, Title,Description) values (1, '1-1 Computers and Information
@@ -130,7 +140,7 @@ information systems.');
 
 async function droptable() {
   const results = await sql`
-    drop table module_questions
+    drop table module_answers
   `;
   console.log(results)
 
@@ -158,34 +168,33 @@ async function insertTags() {
   console.log(results.rowCount)
 }
 
-// insertTags()
-
-async function createSlides() {
+async function SelectQuery() {
   const results = await sql`
-        CREATE TABLE IF NOT EXISTS module_slides (
-          Id SERIAL PRIMARY KEY,
-      subtopicId INTEGER NOT NULL,
-      Title VARCHAR(255) NOT NULL
-  );
+    select * from module_topics
   `;
 
-  console.log(results)
-
+  console.log(results.rows)
 }
+
+// createModuleQuestions()
+
+
+
+// createModuleAnswers()
+
+// createSubTopicsTable()
+
+
+
+// SelectQuery()
+
+
+
+// insertTags()
+
 
 // createSlides()
 
-async function createImagesTable() {
-  const results = await sql`
-        CREATE TABLE IF NOT EXISTS module_images (
-        Id SERIAL PRIMARY KEY,
-        SubtopicId INTEGER NOT NULL,
-        Url VARCHAR(255) NOT NULL
-  );
-  `;
 
-  console.log(results)
 
-}
-
-createImagesTable()
+// createImagesTable()
