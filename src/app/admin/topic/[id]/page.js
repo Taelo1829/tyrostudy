@@ -10,6 +10,7 @@ const page = ({ params }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [isQuestionsOpen, setIsQuestionsOpen] = useState(false)
     const [images, setImages] = useState([])
+    const [questions, setQuestions] = useState([])
     useEffect(() => {
         getId().then(id => {
             getTopics(id)
@@ -36,6 +37,28 @@ const page = ({ params }) => {
         }
     }
 
+    async function uploadQuestion(file) {
+        try {
+            const formData = new FormData();
+            formData.append("file", file.target.files[0]);
+            fetch("/api/upload/questions", {
+                method: "POST",
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setQuestions([...questions, data])
+                })
+                .catch((error) => {
+                    console.error("Error uploading image:", error)
+                });
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsQuestionsOpen(false)
+        }
+    }
+
     if (loading) return <Loading />
     return (
         <div className='main-content p-3'>
@@ -59,14 +82,22 @@ const page = ({ params }) => {
                         Add Images
                     </button>
                     <div className='p-5 flex image-container gap-5'>
-                        {images.map((img, index) => (
-                            <div className='position-relative' key={index}>
-                                <button className='delete' onClick={() => deleteImage(img.id)}>
-                                    &times;
-                                </button>
-                                <img src={img.url} alt={`Image ${index}`} className='w-32 h-32' />
-                            </div>
-                        ))}
+                        {images.map((img, index) => {
+                            let url = img.url
+                            if (url.includes("url")) {
+                                let bod = JSON.parse(url)
+                                url = bod.url
+                            }
+
+                            return (
+                                <div className='position-relative' key={index}>
+                                    <button className='delete' onClick={() => deleteImage(img.id)}>
+                                        &times;
+                                    </button>
+                                    <img src={url} alt={`Image ${index}`} className='w-32 h-32' />
+                                </div>
+                            )
+                        })}
                     </div>
                     <div className='pt-2'>
                         <button className='add-image' onClick={() => setIsQuestionsOpen(true)}>
@@ -85,10 +116,7 @@ const page = ({ params }) => {
             <Modal isOpen={isQuestionsOpen} onClose={() => setIsQuestionsOpen(false)}>
                 <div>Add Questions</div>
                 <div>
-                    <input type="text" className='form-control' placeholder='Enter question' />
-                </div>
-                <div className='p-2 flex flex-end w-100'>
-                    <button className='add-image' >Insert</button>
+                    <input type="file" className='form-control' onChange={uploadQuestion} />
                 </div>
             </Modal>
         </div>

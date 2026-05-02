@@ -386,3 +386,8 @@ a {
   position: absolute;
   font-size: 20px;
 }
+
+a {
+  display: block;
+  width: 100%;
+}
