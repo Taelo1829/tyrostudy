@@ -36,17 +36,28 @@ async function createModuleQuestions() {
   const results = await sql`
     CREATE TABLE IF NOT EXISTS module_questions (
       Id SERIAL PRIMARY KEY,
-      ModuleId INTEGER NOT NULL,
-      Tag VARCHAR(255) NOT NULL,
+      TopicId INTEGER NOT NULL,
       Question VARCHAR(255) NOT NULL,
-      Answer VARCHAR(255) NOT NULL
-      CONSTRAINT fk_module FOREIGN KEY (ModuleId) REFERENCES modules(id) ON DELETE CASCADE,
+      AnswerId INTEGER NOT NULL
     );
   `;
 
   console.log(results)
 }
 
+createModuleQuestions()
+
+async function createModuleAnswers() {
+  const results = await sql`
+    CREATE TABLE IF NOT EXISTS module_answers (
+      Id SERIAL PRIMARY KEY,
+      Answer VARCHAR(255) NOT NULL,
+      QuestionId INTEGER NOT NULL
+    );
+  `;
+}
+
+createModuleAnswers()
 async function insertModuleQuestions() {
   const results = await sql`
     insert into module_questions(ModuleId, Tag, Question, Answer)
@@ -119,12 +130,13 @@ information systems.');
 
 async function droptable() {
   const results = await sql`
-    drop table module_subtopics
+    drop table module_questions
   `;
   console.log(results)
 
 }
 
+// droptable()
 async function createTags() {
   const results = await sql`
         CREATE TABLE IF NOT EXISTS module_tags (

@@ -1,6 +1,7 @@
 "use client"
 import Loading from '@/app/components/Loading'
 import Modal from '@/app/components/Modal'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 const page = ({ params }) => {
@@ -37,28 +38,6 @@ const page = ({ params }) => {
         }
     }
 
-    async function uploadQuestion(file) {
-        try {
-            const formData = new FormData();
-            formData.append("file", file.target.files[0]);
-            fetch("/api/upload/questions", {
-                method: "POST",
-                body: formData,
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    setQuestions([...questions, data])
-                })
-                .catch((error) => {
-                    console.error("Error uploading image:", error)
-                });
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setIsQuestionsOpen(false)
-        }
-    }
-
     if (loading) return <Loading />
     return (
         <div className='main-content p-3'>
@@ -81,7 +60,7 @@ const page = ({ params }) => {
                     <button className='add-image' onClick={() => setIsOpen(true)}>
                         Add Images
                     </button>
-                    <div className='p-5 flex image-container gap-5'>
+                    <div className="grid grid-cols-3 gap-4 p-5">
                         {images.map((img, index) => {
                             let url = img.url
                             if (url.includes("url")) {
@@ -90,11 +69,15 @@ const page = ({ params }) => {
                             }
 
                             return (
-                                <div className='position-relative' key={index}>
+                                <div className='image-container' key={index}>
                                     <button className='delete' onClick={() => deleteImage(img.id)}>
                                         &times;
                                     </button>
-                                    <img src={url} alt={`Image ${index}`} className='w-32 h-32' />
+                                    <Image
+                                        src={url}
+                                        alt={`Image ${index}`}
+                                        width={256}
+                                        height={256} />
                                 </div>
                             )
                         })}
@@ -103,6 +86,15 @@ const page = ({ params }) => {
                         <button className='add-image' onClick={() => setIsQuestionsOpen(true)}>
                             Add Questions
                         </button>
+                    </div>
+                    <div>
+                        {questions.map((question, index) => {
+                            return (
+                                <div key={index}>
+
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
@@ -166,6 +158,34 @@ const page = ({ params }) => {
             const data = await response.json()
         } catch (error) {
             console.error("Error deleting image:", error)
+        }
+    }
+
+
+    async function uploadQuestion(file) {
+        try {
+            setLoading(true)
+            const formData = new FormData();
+            formData.append("file", file.target.files[0]);
+            formData.append('id', id);
+            fetch("/api/upload/questions", {
+                method: "POST",
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.clear()
+                    console.log(data)
+                    setQuestions([...questions, data])
+                    setLoading(false)
+                })
+                .catch((error) => {
+                    console.error("Error uploading image:", error)
+                });
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsQuestionsOpen(false)
         }
     }
 }
