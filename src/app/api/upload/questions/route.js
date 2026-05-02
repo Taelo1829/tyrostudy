@@ -37,27 +37,16 @@ export async function POST(req) {
         });
 
         for (let i = 0; i < rows.length; i++) {
-            await sql`
+            let inserted = await sql`
            INSERT INTO module_questions (TopicId, Question, AnswerId) 
-           VALUES (${rows[i].TopicId}, ${rows[i].Question}, ${rows[i].AnswerId});
-           `
-            let result = await sql`
-           SELECT * FROM module_questions 
-           ORDER BY Id DESC
-           LIMIT 1
+           VALUES (${rows[i].TopicId}, ${rows[i].Question}, ${rows[i].AnswerId})
+            RETURNING id
            `
 
-            console.log(result)
-            let answerSQL = `INSERT INTO module_answers (QuestionId, Answer)
-                VALUES ${rows[i].Answers.map((answer) => '(' + result.rows[0].Id + ',' + answer + ')')}
-                `
-
-            console.log(answerSQL)
-            let answers = await sql`                
-                    ${answerSQL}
-                `
-
-            console.log(answers)
+            for (let j = 0; j < rows[i].Answers.length; j++) {
+                await sql`INSERT INTO module_answers (QuestionId, Answer)
+                VALUES (${inserted.rows[0].id},${rows[i].Answers[j]})`
+            }
         }
 
         return Response.json({ count: rows.length });
