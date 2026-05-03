@@ -23,7 +23,8 @@ const page = ({ params }) => {
         getQuestions()
     }
 
-    function getNextQuestion(answer) {
+    function getNextQuestion() {
+        if (answeredQuestions.length === 5) return
         setTimeout(() => {
             let prevIndex = questions.findIndex(item => item.id === question.id)
             let index = Math.round(Math.random() * questions.length)
@@ -35,7 +36,6 @@ const page = ({ params }) => {
         }, 1000)
 
     }
-
 
     if (loading) return <Loading />
     return (

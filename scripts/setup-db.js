@@ -110,7 +110,15 @@ async function createTopicsTable() {
   `;
 
   console.log(results)
+}
 
+async function alterTable() {
+  const results = await sql`
+    ALTER TABLE module_topics 
+    ADD Column topic_order INT Default 0
+  `;
+
+  console.log(results)
 }
 
 async function createSubTopicsTable() {
@@ -175,8 +183,8 @@ async function SelectQuery() {
   console.log(results.rows)
 }
 
-createModuleQuestions()
-createModuleAnswers()
+// createModuleQuestions()
+// createModuleAnswers()
 
 // createSubTopicsTable()
 
@@ -195,3 +203,5 @@ createModuleAnswers()
 
 // createImagesTable()
 // droptable()
+
+// alterTable()

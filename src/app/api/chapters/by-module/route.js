@@ -7,7 +7,9 @@ export async function GET(request) {
         const moduleId = searchParams.get("moduleId")
         let { rows } = await sql`
         Select * from module_topics
-        WHERE moduleId = ${moduleId};`
+        WHERE moduleId = ${moduleId}
+        ORDER BY topic_order
+        ;`
 
         return NextResponse.json(rows, { status: 200 })
     } catch (error) {

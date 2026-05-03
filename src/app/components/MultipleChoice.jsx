@@ -8,21 +8,34 @@ export default function MultipleChoiceQuestion({
     options,
     onAnswer,
 }) {
+    const [shuffledOptions, setShuffledOptions] = useState([])
 
     useEffect(() => {
         setSelected(null);
         setSubmitted(false);
+        let opts = []
+        while (opts.length < options.length) {
+            let rndmInd = parseInt(Math.random() * options.length)
+            let rndmOption = options[rndmInd]
+            if (!opts?.find(item => item?.label === rndmOption?.label))
+                opts.push(rndmOption)
+        }
+
+        setShuffledOptions(opts)
     }, [JSON.stringify(question)])
-    
+
     const [selected, setSelected] = useState(null);
     const [submitted, setSubmitted] = useState(false);
 
     const isCorrect = submitted && options[selected]?.correct;
 
+
+
+
     function handleSubmit() {
         if (selected === null || submitted) return;
         setSubmitted(true);
-        onAnswer?.({ selectedIndex: selected, correct: options[selected].correct });
+        onAnswer?.({ selectedIndex: selected, correct: shuffledOptions[selected].correct });
     }
 
     function handleReset() {
@@ -37,7 +50,7 @@ export default function MultipleChoiceQuestion({
             </p>
 
             <div className="flex flex-col gap-2">
-                {options.map((opt, i) => {
+                {shuffledOptions.map((opt, i) => {
                     const state = !submitted
                         ? selected === i ? 'selected' : 'idle'
                         : i === selected
@@ -92,7 +105,7 @@ export default function MultipleChoiceQuestion({
                         ? 'bg-green-50 text-green-800 border-green-300'
                         : 'bg-red-50 text-red-800 border-red-300',
                 ].join(' ')}>
-                    {options[selected].feedback}
+                    {shuffledOptions[selected].feedback}
                 </div>
             )}
 
