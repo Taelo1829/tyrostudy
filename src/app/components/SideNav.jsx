@@ -44,7 +44,7 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
                 <hr />
                 <div className='bg-gray-800 p-4'>
                     <li className="flex justify-between items-center cursor-pointer">
-                        <Link href="/admin" onClick={toggleSideNav}>Admin</Link>
+                        <Link href="/admin/modules" onClick={toggleSideNav}>Admin</Link>
                     </li>
                 </div>
                 <hr />
@@ -69,7 +69,7 @@ const SideNav = ({ toggleSideNav, isOpen }) => {
                         <ModuleNav
                             key={index}
                             title={module.modulecode + " - " + module.modulename}
-                            href={"/module/" + module.id}
+                            href={"/notes/" + module.id}
                             toggle={toggleSideNav}
                         />
                     ))}
