@@ -18,6 +18,7 @@ const page = ({ params }) => {
     const [question, setQuestion] = useState({})
     const [chapterTopics, setChapterTopics] = useState([])
     const [chapterTopicId, setChapterTopicId] = useState()
+    const [uploading, setUploading] = useState(false)
     useEffect(() => {
         getId().then(id => {
             getTopics(id)
@@ -28,6 +29,7 @@ const page = ({ params }) => {
 
     function uploadImage(file) {
         try {
+            setUploading(true)
             const formData = new FormData();
             formData.append("file", file.target.files[0]);
             fetch("/api/upload", {
@@ -37,6 +39,7 @@ const page = ({ params }) => {
                 .then((response) => response.json())
                 .then((data) => {
                     setImages([...images, data])
+                    setUploading(false)
                 })
                 .catch((error) => {
                     console.error("Error uploading image:", error)
@@ -77,13 +80,10 @@ const page = ({ params }) => {
                         onChange={(e) => setTopic({ ...topic, description: e.target.value })} />
                 </div>
                 <div className='pt-1'>
-                    <button className='add-image' onClick={() => setIsOpen(true)}>
-                        Add Images
-                    </button>
                     <div className="grid grid-cols-3 gap-4 p-5">
                         {images.map((img, index) => {
                             let url = img.url
-                            if (url.includes("url")) {
+                            if (typeof url === "string" && url.includes("url")) {
                                 let bod = JSON.parse(url)
                                 url = bod.url
                             }
@@ -102,6 +102,9 @@ const page = ({ params }) => {
                             )
                         })}
                     </div>
+                    <button className='add-image' onClick={() => setIsOpen(true)}>
+                        Add Images
+                    </button>
                     <div className='pt-2'>
                         <button className='add-image' onClick={() => setIsQuestionsOpen(true)}>
                             Add Questions
@@ -131,7 +134,7 @@ const page = ({ params }) => {
                 <div>Add Images</div>
                 <input type="file" className='form-control' onChange={uploadImage} />
                 <div className='p-2 flex flex-end w-100'>
-                    <button className='add-image' onClick={insertImage}>Insert</button>
+                    <button className='add-image' disabled={uploading} onClick={insertImage}>Insert</button>
                 </div>
             </Modal>
             <Modal isOpen={isQuestionsOpen} onClose={() => setIsQuestionsOpen(false)}>
@@ -163,6 +166,9 @@ const page = ({ params }) => {
                 />
 
             </Modal>
+            <div className='flex justify-end'>
+                <button className='btn p-5'>SAVE</button>
+            </div>
         </div>
     )
 

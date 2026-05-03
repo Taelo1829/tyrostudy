@@ -114,8 +114,8 @@ async function createTopicsTable() {
 
 async function alterTable() {
   const results = await sql`
-    ALTER TABLE module_subtopics 
-    ADD Column topic_order INT Default 0
+    ALTER TABLE module_questions
+    ALTER COLUMN Question TYPE TEXT;
   `;
 
   console.log(results)
