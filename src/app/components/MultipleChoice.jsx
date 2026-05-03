@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LETTERS = ['A', 'B', 'C', 'D',];
 
@@ -8,6 +8,12 @@ export default function MultipleChoiceQuestion({
     options,
     onAnswer,
 }) {
+
+    useEffect(() => {
+        setSelected(null);
+        setSubmitted(false);
+    }, [JSON.stringify(question)])
+    
     const [selected, setSelected] = useState(null);
     const [submitted, setSubmitted] = useState(false);
 

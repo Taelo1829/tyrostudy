@@ -40,7 +40,7 @@ async function createImagesTable() {
   );
   `;
 
-  console.log(results)
+  console.info(results)
 
 }
 

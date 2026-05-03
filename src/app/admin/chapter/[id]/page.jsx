@@ -38,6 +38,7 @@ const page = ({ params }) => {
     async function getId() {
         const { id } = await params
         setId(id)
+        localStorage.setItem("chapter", id)
         return id
     }
 

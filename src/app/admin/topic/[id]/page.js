@@ -1,6 +1,8 @@
 "use client"
+import Card from '@/app/components/Card'
 import Loading from '@/app/components/Loading'
 import Modal from '@/app/components/Modal'
+import Question from '@/app/components/Question'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
@@ -10,11 +12,17 @@ const page = ({ params }) => {
     const [topic, setTopic] = useState({})
     const [isOpen, setIsOpen] = useState(false)
     const [isQuestionsOpen, setIsQuestionsOpen] = useState(false)
+    const [isQuestionOpen, setIsQuestionOpen] = useState(false)
     const [images, setImages] = useState([])
     const [questions, setQuestions] = useState([])
+    const [question, setQuestion] = useState({})
+    const [chapterTopics, setChapterTopics] = useState([])
+    const [chapterTopicId, setChapterTopicId] = useState()
     useEffect(() => {
         getId().then(id => {
             getTopics(id)
+            setChapterTopicId(id)
+            getQuestions(id)
         })
     }, [])
 
@@ -39,6 +47,18 @@ const page = ({ params }) => {
     }
 
     if (loading) return <Loading />
+
+    function handleEdit(e) {
+        setLoading(true)
+        getChapterTopics()
+        setQuestion(e)
+        setIsQuestionOpen(true)
+    }
+
+    function handleDelete(e) {
+        console.log(e)
+    }
+
     return (
         <div className='main-content p-3'>
             <div className='text-2xl'>Edit Topic</div>
@@ -87,17 +107,26 @@ const page = ({ params }) => {
                             Add Questions
                         </button>
                     </div>
-                    <div>
+                    <div className='pt-5 question-container'>
                         {questions.map((question, index) => {
                             return (
-                                <div key={index}>
-
-                                </div>
+                                <Card
+                                    nohref
+                                    key={index}
+                                    title={
+                                        <Question
+                                            question={question}
+                                            onDelete={handleDelete}
+                                            onEdit={handleEdit}
+                                        />
+                                    }
+                                />
                             )
                         })}
                     </div>
                 </div>
             </div>
+
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <div>Add Images</div>
                 <input type="file" className='form-control' onChange={uploadImage} />
@@ -110,6 +139,29 @@ const page = ({ params }) => {
                 <div>
                     <input type="file" className='form-control' onChange={uploadQuestion} />
                 </div>
+            </Modal>
+            <Modal isOpen={isQuestionOpen} onClose={() => setIsQuestionOpen(false)}>
+                <div>Edit Question</div>
+                <textarea
+                    style={{ height: 100 }}
+                    type="text"
+                    className='form-control'
+                    value={question.question}
+                    onChange={(e) => setQuestion({ ...question, question: e.target.value })} />
+                <div>Topic</div>
+                <Card
+                    nohref
+                    title={
+                        <select value={chapterTopicId}>
+                            {chapterTopics.map((topic) => (
+                                <option key={topic.id} value={topic.id}>
+                                    {topic.title}
+                                </option>
+                            ))}
+                        </select>
+                    }
+                />
+
             </Modal>
         </div>
     )
@@ -161,7 +213,6 @@ const page = ({ params }) => {
         }
     }
 
-
     async function uploadQuestion(file) {
         try {
             setLoading(true)
@@ -186,6 +237,30 @@ const page = ({ params }) => {
             console.error(error)
         } finally {
             setIsQuestionsOpen(false)
+        }
+    }
+
+    async function getQuestions(topicId) {
+        try {
+            if (!topicId) topicId = id
+            const response = await fetch(`/api/questions/${topicId}`)
+            const data = await response.json()
+            setQuestions(data)
+            setLoading(false)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async function getChapterTopics() {
+        try {
+            let id = localStorage.getItem("chapter")
+            const response = await fetch('/api/chapters/' + id)
+            const data = await response.json()
+            setLoading(false)
+            setChapterTopics(data)
+        } catch (error) {
+            console.error(error)
         }
     }
 }

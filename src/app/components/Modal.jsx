@@ -29,7 +29,7 @@ export default function Modal({ isOpen, onClose, children, defaultFullscreen = f
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className={"fixed inset-0 z-50 flex items-center justify-center"}>
             {/* Backdrop — hidden in fullscreen */}
             {!isFullscreen && (
                 <div
@@ -49,22 +49,6 @@ export default function Modal({ isOpen, onClose, children, defaultFullscreen = f
                 ].join(" ")}
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Fullscreen toggle button */}
-                <button
-                    onClick={() => setIsFullscreen((prev) => !prev)}
-                    className={[
-                        "absolute z-20 flex items-center justify-center",
-                        "w-8 h-8 rounded-lg text-gray-400 hover:text-gray-700",
-                        "hover:bg-gray-100 transition-colors duration-150",
-                        isFullscreen ? "top-3 right-12" : "top-3 right-3",
-                    ].join(" ")}
-                    title={isFullscreen ? "Exit fullscreen (F11)" : "Fullscreen (F11)"}
-                    aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-                >
-                    {isFullscreen ? <ExitFullscreenIcon /> : <EnterFullscreenIcon />}
-                </button>
-
-                {/* Close button — always visible in fullscreen */}
                 {isFullscreen && (
                     <button
                         onClick={onClose}

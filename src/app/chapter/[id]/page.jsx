@@ -10,7 +10,10 @@ const page = ({ params }) => {
     const [loading, setLoading] = React.useState(true)
     const [modalOpen, setModalOpen] = React.useState(false)
     const [questions, setQuestions] = React.useState([])
+    const [answeredQuestions, setAnsweredQuestions] = React.useState([])
+    const [question, setQuestion] = React.useState({})
     React.useEffect(() => {
+        console.clear()
         getData()
     }, [])
 
@@ -19,6 +22,21 @@ const page = ({ params }) => {
         setLoading(true)
         getQuestions()
     }
+
+    function getNextQuestion(answer) {
+        setTimeout(() => {
+            let prevIndex = questions.findIndex(item => item.id === question.id)
+            let index = Math.round(Math.random() * questions.length)
+            while (answeredQuestions.includes(index)) {
+                index = Math.round(Math.random() * questions.length)
+            }
+            setQuestion(questions[index])
+            setAnsweredQuestions([...answeredQuestions, prevIndex])
+        }, 1000)
+
+    }
+
+
     if (loading) return <Loading />
     return (
         <div className='main-content p-2'>
@@ -39,14 +57,11 @@ const page = ({ params }) => {
 
             <Modal isOpen={modalOpen} defaultFullscreen onClose={() => setModalOpen(false)}>
                 <div className='main-content'>
-                    {questions.map((question, index) => (
-                        <MultipleChoiceQuestion
-                            key={index}
-                            question={question.question}
-                            options={question.answers}
-                            onAnswer={(e) => console.log(e)}
-                        />
-                    ))}
+                    <MultipleChoiceQuestion
+                        question={question.question}
+                        options={question.answers}
+                        onAnswer={(e) => getNextQuestion(e)}
+                    />
                 </div>
             </Modal>
         </div>
@@ -73,7 +88,9 @@ const page = ({ params }) => {
             const res = await fetch(`/api/questions/${id}`)
             const data = await res.json()
             setQuestions(data)
+            setQuestion(data[0])
             setLoading(false)
+
         } catch (error) {
             console.error(error)
         }

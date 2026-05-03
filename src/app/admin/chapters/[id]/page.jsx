@@ -22,7 +22,10 @@ const page = ({ params }) => {
         <div className='main-content p-5'>
             <div>
                 {chapters.map((chapter) => (
-                    <Card key={chapter.id} title={chapter.title} href={`/admin/chapter/${chapter.id}`} />
+                    <Card
+                        key={chapter.id}
+                        title={chapter.title}
+                        href={`/admin/chapter/${chapter.id}`} />
                 ))}
                 <button
                     onClick={addChapter}
