@@ -152,7 +152,7 @@ const page = ({ params }) => {
                 <Card
                     nohref
                     title={
-                        <select value={chapterTopicId}>
+                        <select value={chapterTopicId} onChange={(e) => console.log(e.value)}>
                             {chapterTopics.map((topic) => (
                                 <option key={topic.id} value={topic.id}>
                                     {topic.title}
