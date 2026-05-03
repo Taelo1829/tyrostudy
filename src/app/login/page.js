@@ -24,7 +24,6 @@ export default function AuthPage() {
     };
 
     const handleSubmit = async (e) => {
-        console.log("here")
         e.preventDefault();
         setLoading(true);
         let apiPath = mode === "login" ? "/api/auth" : "/api/users";

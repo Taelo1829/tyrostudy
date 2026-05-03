@@ -45,7 +45,6 @@ const page = ({ params }) => {
         try {
             const response = await fetch(`/api/chapters/${id}`)
             const data = await response.json()
-            console.log(data)
             setTopics(data)
             setLoading(false)
         } catch (error) {

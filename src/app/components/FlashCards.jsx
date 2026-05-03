@@ -17,7 +17,6 @@ const FlashCards = ({ id }) => {
     }, [])
 
     const viewNewCard = () => {
-        console.log(cards)
         if (cards.length) {
             const c = cards[current];
             setQuestion(c.question);

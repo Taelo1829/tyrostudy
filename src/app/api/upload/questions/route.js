@@ -42,8 +42,7 @@ export async function POST(req) {
            VALUES (${rows[i].TopicId}, ${rows[i].Question}, ${rows[i].AnswerId})
             RETURNING id
            `
-
-            for (let j = 0; j < rows[i].Answers.length; j++) {
+            for (let j = 0; j < rows[i].Answers.filter(Boolean).length; j++) {
                 await sql`INSERT INTO module_answers (QuestionId, Answer)
                 VALUES (${inserted.rows[0].id},${rows[i].Answers[j]})`
             }

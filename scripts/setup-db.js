@@ -29,7 +29,7 @@ async function CreatingModulesTable() {
     );
   `;
 
-  console.log(results)
+  console.info(results)
 }
 async function createImagesTable() {
   const results = await sql`
@@ -140,13 +140,12 @@ information systems.');
 
 async function droptable() {
   const results = await sql`
-    drop table module_answers
+    drop table module_questions
   `;
   console.log(results)
 
 }
 
-// droptable()
 async function createTags() {
   const results = await sql`
         CREATE TABLE IF NOT EXISTS module_tags (
@@ -170,17 +169,14 @@ async function insertTags() {
 
 async function SelectQuery() {
   const results = await sql`
-    select * from module_topics
+    select * from module_answers
   `;
 
   console.log(results.rows)
 }
 
-// createModuleQuestions()
-
-
-
-// createModuleAnswers()
+createModuleQuestions()
+createModuleAnswers()
 
 // createSubTopicsTable()
 
@@ -198,3 +194,4 @@ async function SelectQuery() {
 
 
 // createImagesTable()
+// droptable()
