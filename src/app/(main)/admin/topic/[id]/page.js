@@ -62,6 +62,8 @@ const page = ({ params }) => {
         console.log(e)
     }
 
+    console.log(chapterTopics)
+
     return (
         <div className='main-content p-3'>
             <div className='text-2xl'>Edit Topic</div>
@@ -155,20 +157,21 @@ const page = ({ params }) => {
                 <Card
                     nohref
                     title={
-                        <select value={chapterTopicId} onChange={(e) => console.log(e.value)}>
+                        <select value={chapterTopicId} onChange={(e) => setChapterTopicId(e.target.value)}>
                             {chapterTopics.map((topic) => (
                                 <option key={topic.id} value={topic.id}>
-                                    {topic.title}
+                                    <Card nohref title={topic.title} />
                                 </option>
                             ))}
                         </select>
                     }
                 />
+                <div className='flex justify-end'>
+                    <button className='btn p-5' onClick={saveQuestion}>SAVE</button>
+                </div>
 
             </Modal>
-            <div className='flex justify-end'>
-                <button className='btn p-5'>SAVE</button>
-            </div>
+
         </div>
     )
 
@@ -261,10 +264,29 @@ const page = ({ params }) => {
     async function getChapterTopics() {
         try {
             let id = localStorage.getItem("chapter")
-            const response = await fetch('/api/chapters/' + id)
+            const response = await fetch('/api/chapters/')
             const data = await response.json()
             setLoading(false)
             setChapterTopics(data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async function saveQuestion() {
+        try {
+            const response = await fetch(`/api/questions/${question.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    question: question.question,
+                    topicId: chapterTopicId
+                }),
+            })
+            const data = await response.json()
+            setIsQuestionOpen(false)
         } catch (error) {
             console.error(error)
         }

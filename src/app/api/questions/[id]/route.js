@@ -35,3 +35,19 @@ export async function GET(request, { params }) {
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }
+
+export async function PUT(request, { params }) {
+    try {
+        const { id } = await params
+        const { question, topicId } = await request.json()
+        let { rowCount } = await sql`
+        Update module_questions 
+        SET question = ${question}, TopicId = ${topicId}
+         WHERE Id = ${id}; `
+
+        return NextResponse.json({ rowCount }, { status: 200 })
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+}
