@@ -1,7 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ActualLayout from "./ActualLayout";
-import Provider from "./Provider/Context";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -26,12 +24,8 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
-        <Provider>
-          <ActualLayout>
             {children}
             <Toaster position="top-right" />
-          </ActualLayout>
-        </Provider>
       </body>
     </html>
   );

@@ -10,7 +10,13 @@ export async function POST(request) {
 
         const { rows } = await sql`Select * FROM Users WHERE Email = ${email};`
         if (await comparePassword(password, rows[0].passwordhash)) {
-            return NextResponse.json({ loginCookie: rows[0].logincookie }, { status: 201 });
+            const response = NextResponse.json({ message: "authenticated" }, { status: 201 });
+            response.cookies.set("auth-token", rows[0].logincookie, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                path: "/",
+            });
+            return response
         } else {
             return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
         }

@@ -31,10 +31,11 @@ export async function POST(request) {
 
 export async function GET(request) {
     try {
-        const { searchParams } = new URL(request.url)
-        const logincookie = searchParams.get('logincookie')
-        const { rows } = await sql`Select * FROM Users WHERE LoginCookie = ${logincookie};`
-        return NextResponse.json({ user: rows[0] }, { status: 200 })
+        const cookies = request.cookies
+        const cookie = cookies.get('auth-token')
+
+        const { rows } = await sql`Select * FROM Users WHERE LoginCookie = ${cookie?.value};`
+        return NextResponse.json({ user: rows[0] || {} }, { status: 200 })
     } catch (error) {
         console.log(error.message)
         return NextResponse.json({ error: error.message }, { status: 500 })

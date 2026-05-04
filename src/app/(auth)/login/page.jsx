@@ -1,9 +1,8 @@
 "use client";
 import Image from 'next/image'
 import { useState } from "react";
-import Logo from "../assets/logo.png"
-import { useCustomContext } from '../Provider/Context';
-import { redirect } from 'next/navigation'
+import Logo from "../../assets/logo.png"
+import { redirect } from 'next/navigation';
 
 
 export default function AuthPage() {
@@ -11,13 +10,8 @@ export default function AuthPage() {
     const [form, setForm] = useState({ name: "", email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { loggedIn, setLoggedIn } = useCustomContext()
 
     const isLogin = mode === "login";
-
-    if (loggedIn) {
-        redirect('/')
-    }
 
     const handleChange = (e) => {
         setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -37,9 +31,7 @@ export default function AuthPage() {
 
         if (response.ok) {
             let body = await response.json();
-            if (typeof window !== "undefined")
-                localStorage.setItem("auth-token", body.loginCookie);
-            setLoggedIn(true)
+            redirect("/")
         }
 
         await new Promise((r) => setTimeout(r, 1200));

@@ -1,24 +1,17 @@
 "use client";
 import Calendar from "./components/Calendar";
 import { redirect } from 'next/navigation'
-import { useCustomContext } from "./Provider/Context";
 import { useEffect, useState } from "react";
 import Loading from "./components/Loading";
-import { getAuthToken } from "./helper";
 
 export default function Home() {
   useEffect(() => {
     getUserData()
   }, [])
-  const { loggedIn } = useCustomContext()
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(true)
   let date = new Date().toDateString();
-  // app/page.tsx
-  if (!loggedIn) {
-    redirect('/login')
-  }
-
+ 
   const greetings = new Date().getHours() < 12 && new Date().getHours() < 18 ? "Good morning" : new Date().getHours() > 12 && new Date().getHours() < 18 ? "Good afternoon" : "Good evening";
   if (loading) return <Loading />
   return (
@@ -93,8 +86,7 @@ export default function Home() {
 
   async function getUserData() {
     try {
-      const loginCookie = getAuthToken()
-      const response = await fetch('/api/users?logincookie=' + loginCookie, { method: 'GET' })
+      const response = await fetch('/api/users', { method: 'GET' })
       if (response.ok) {
         const data = await response.json()
         setUser(data.user)
