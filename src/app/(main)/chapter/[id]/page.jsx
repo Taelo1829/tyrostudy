@@ -1,9 +1,9 @@
 "use client"
-import Loading from '@/app/components/Loading'
+import Loading from '@/app/(main)/components/Loading'
 import React from 'react'
 import PowerpointReader from './PowerpointReader'
-import Modal from '@/app/components/Modal'
-import MultipleChoiceQuestion from '@/app/components/MultipleChoice'
+import Modal from '@/app/(main)/components/Modal'
+import MultipleChoiceQuestion from '@/app/(main)/components/MultipleChoice'
 
 const page = ({ params }) => {
     const [subchapters, setSubchapters] = React.useState([])

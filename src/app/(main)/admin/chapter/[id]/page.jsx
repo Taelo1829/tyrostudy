@@ -1,7 +1,7 @@
 "use client"
-import AddModal from '@/app/components/AddModal'
-import Card from '@/app/components/Card'
-import Loading from '@/app/components/Loading'
+import AddModal from '@/app/(main)/components/AddModal'
+import Card from '@/app/(main)/components/Card'
+import Loading from '@/app/(main)/components/Loading'
 import React, { useEffect } from 'react'
 
 const page = ({ params }) => {

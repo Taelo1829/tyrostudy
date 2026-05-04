@@ -1,10 +1,10 @@
 "use client"
-import Card from '@/app/components/Card'
-import Loading from '@/app/components/Loading'
-import Modal from '@/app/components/Modal'
+import Card from '@/app/(main)/components/Card'
+import Loading from '@/app/(main)/components/Loading'
+import Modal from '@/app/(main)/components/Modal'
 import React, { useEffect } from 'react'
 import Chapter from './chapter'
-import AddModal from '@/app/components/AddModal'
+import AddModal from '@/app/(main)/components/AddModal'
 
 const page = ({ params }) => {
     const [id, setId] = React.useState(null)
